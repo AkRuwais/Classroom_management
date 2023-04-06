@@ -164,18 +164,20 @@ module.exports = {
   postprofile: async (req, res) => {
     try {
       console.log(req.file.originalname);
-      await data.insertMany({
-        picture: req.file.originalname,
-        name: req.body.name,
-        username: req.body.username,
-        phonenumber: req.body.phonenumber,
-        Parentname: req.body.Parentname,
-        parantnumber: req.body.parantnumber,
-        DOB: req.body.DOB,
-        class: req.body.class,
-        dvision: req.body.dvision,
-        gender: req.body.gender,
-      });
+      await data.insertMany(
+        ({
+          originalname,
+          name,
+          username,
+          phonenumber,
+          Parentname,
+          parantnumber,
+          DOB,
+          std,
+          dvision,
+          gender,
+        } = req.body)
+      );
       const person = await data.find();
     } catch (error) {
       console.log(error);

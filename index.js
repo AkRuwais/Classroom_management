@@ -13,14 +13,13 @@ app.use(bodyparser.json());
 
 //---------------ENV--------------------------------
 
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "./.env" });
 const port = process.env.PORT;
 const key = process.env.MONGO_CON;
 
 //---------------ATLAS connected to server----------
 
-mongoose.connect(key).then(() => console.log("Database connected to atlas"));
-console.log("mongoose Connected");
+mongoose.connect(key).then(() => console.log("Database connected ---"))
 
 //---------------APLOADS----------------------------
 
@@ -36,7 +35,7 @@ app.use("/", Home);
 //---------------Admin page-------------------------
 
 const Admin = require("./src/Router/Admin_router");
-app.use("/", Admin);
+app.use("/admin", Admin);
 
 //---------------STRT the server--------------------
 

@@ -1,4 +1,5 @@
-const admin = require("../Model/adminprofil");
+// const admin = require("../Model/adminprofil");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   getlogin: (req, res) => {
@@ -10,15 +11,20 @@ module.exports = {
   },
   postlogin: async (req, res) => {
     try {
-      console.log(req.body);
-      const login = await admin.findOne({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-      });
-      res.send(req.body);
+      // console.log(JSON.stringify(req.body));
+      const admin = {
+        name: "ADMIN",
+        email: "adminone@gmail.com",
+        password: "classroom@2023",
+      };
+      console.log(JSON.stringify(admin));
+      if (JSON.stringify(admin) === JSON.stringify(req.body)) {
+        res.send("home");
+      } else {
+        res.send("!!Errro!!  please check onetime...");
+      }
     } catch (error) {
-      console.log(error);
+      console.log("error");
     }
   },
 };

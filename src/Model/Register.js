@@ -25,7 +25,7 @@ const data = new mongoose.Schema({
   DOB: {
     type: Date,
   },
-  class: {
+  std: {
     type: String,
   },
   dvision: {
