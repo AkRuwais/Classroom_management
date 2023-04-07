@@ -19,7 +19,7 @@ const key = process.env.MONGO_CON;
 
 //---------------ATLAS connected to server----------
 
-mongoose.connect(key).then(() => console.log("Database connected ---"))
+mongoose.connect(key).then(() => console.log("Database connected ---"));
 
 //---------------APLOADS----------------------------
 
@@ -30,7 +30,12 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 //---------------HOME page--------------------------
 
 const Home = require("./src/Router/User_router");
-app.use("/", Home);
+app.use("/user", Home);
+
+//---------------TOTUR page-------------------------
+
+const Tutor = require("./src/Router/Tutor_router");
+app.use("/tutor", Tutor);
 
 //---------------Admin page-------------------------
 

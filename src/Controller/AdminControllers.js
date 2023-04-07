@@ -1,4 +1,3 @@
-// const admin = require("../Model/adminprofil");
 const jwt = require("jsonwebtoken");
 
 module.exports = {
@@ -27,4 +26,49 @@ module.exports = {
       console.log("error");
     }
   },
-};
+
+  gettutor:(req,res)=>{
+    try {
+      res.send("admin can add tutor in here")
+    } catch (error) {
+      console.log(error
+        );
+    }
+  },
+  posttutor: async (req, res) => {
+    try {
+      const signup = await register.insertMany(
+        ({ Name, Username, Phone, Email, password } = req.body)
+      );
+      res.sent(req.body);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  puttutor:async(req,res)=>{
+    try {
+      const signup = await register.insertMany(
+        ({ Name, Username, Phone, Email, password } = req.body)
+      );
+      res.sent(req.body);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  deletetutor:async(req,res)=>{
+    try {
+    const id = req.params.id
+    await studentsmodel.deleteOne({_id:id}).then(result=>{
+    console.log(result);
+    res.redirect('/students')
+    })
+    } catch (error) {
+    console.log(error);
+    }
+    
+},
+
+
+// student:{
+//   get:(req,res)=>{}
+}

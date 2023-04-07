@@ -5,19 +5,18 @@ const storage = require("../../Util/DiskStorage");
 const upload = multer({ storage: storage });
 const register = require("../Model/Register");
 const data = require("../Model/Home_page");
+const { post } = require("../Router/User_router");
 
 module.exports = {
   getHome: (req, res) => {
     try {
-      res.send("Users will come here");
-      // res.render(req.body);
+      res.send("Tutor will come here");
     } catch (error) {
       console.log(error);
     }
   },
   postHome: async (req, res) => {
     try {
-      console.log(req.body);
       const Home = await data.insertMany(
         ({
           Date,
@@ -44,7 +43,7 @@ module.exports = {
 
   getLogin: (req, res) => {
     try {
-      res.send("User can login here");
+      res.send("Tutor can login here");
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +61,7 @@ module.exports = {
 
   getSignup: (req, res) => {
     try {
-      res.send("User can register here");
+      res.send("Tutor can register here");
     } catch (error) {
       console.log(error);
     }
@@ -78,16 +77,65 @@ module.exports = {
     }
   },
 
-  getTodaytask: (req, res) => {
+  getclass: (req, res) => {
     try {
-      res.send("Today's tasks will show here");
+      res.send("Tutor can select class here");
     } catch (error) {
       console.log(error);
     }
   },
-  postTodaytask: async (req, res) => {
+  postclass: async (req, res) => {
     try {
-      const tasks = await data.insertMany(({ Date, Todays_task } = req.body));
+      const signup = await register.insertMany({
+        class: req.body.std,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getAttendance: (req, res) => {
+    try {
+      res.send("Tutor can check students attendance here");
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getstudent: (req, res) => {
+    try {
+      res.send("User can register here");
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  postaddstudent: async (req, res) => {
+    try {
+      const signup = await register.insertMany(
+        ({ Name, Username, Phone, Email, password } = req.body)
+      );
+      res.sent(req.body);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  editstudent: async (req, res) => {
+    try {
+      const edit = await register.insertMany(
+        ({ Name, Username, Phone, Email, password } = req.body)
+      );
+      res.sent(req.body);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  deletestudent: async (req, res) => {
+    try {
+      let studentId = req.params.id;
+      console.log(studentId);
+      await studentId.deleteOne({ _id: studentId }).then((result) => {
+        console.log(result + "student deleted");
+      });
     } catch (error) {
       console.log(error);
     }
@@ -105,73 +153,6 @@ module.exports = {
       const assignment = await data.insertMany({
         Assignment: req.body.Assignment,
       });
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
-  getAnnouncement: (req, res) => {
-    try {
-      res.sent("Announcement will show here");
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  postAnnouncement: async (req, res) => {
-    try {
-      const announcement = await data.insertMany(
-        ({
-          Date,
-          Announcements_pdf,
-          Announcements_images,
-          Announcements_videos,
-        } = req.body)
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
-  getNotes: (req, res) => {
-    try {
-      res.sent("Notes will show here");
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  postNotes: async (req, res) => {
-    try {
-      const notes = await data.insertMany(({ date, Notes } = req.body));
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
-  getprofile: (req, res) => {
-    try {
-      res.send("Profile will show here");
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  postprofile: async (req, res) => {
-    try {
-      console.log(req.file.originalname);
-      await data.insertMany(
-        ({
-          originalname,
-          name,
-          username,
-          phonenumber,
-          Parentname,
-          parantnumber,
-          DOB,
-          std,
-          dvision,
-          gender,
-        } = req.body)
-      );
-      const person = await data.find();
     } catch (error) {
       console.log(error);
     }
