@@ -14,7 +14,7 @@ app.use(bodyparser.json());
 //---------------ENV--------------------------------
 
 require("dotenv").config({ path: "./.env" });
-const port = process.env.PORT;
+const PORT = process.env.PORT;
 const key = process.env.MONGO_CON;
 
 //---------------ATLAS connected to server----------
@@ -44,6 +44,6 @@ app.use("/admin", Admin);
 
 //---------------STRT the server--------------------
 
-app.listen(7000, () => {
-  console.log("Server connected on port : 7000");
+app.listen(PORT, () => {
+  console.log(`Server connected on port ${PORT}`);
 });

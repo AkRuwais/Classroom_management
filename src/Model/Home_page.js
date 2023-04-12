@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-// const schema = mongoose.Schema;
 
 const data = new mongoose.Schema({
   Date: {

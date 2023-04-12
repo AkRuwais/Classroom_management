@@ -11,14 +11,14 @@ const controller = require("../Controller/TutorController");
 router.get("/tutor", controller.getHome);
 router.post("/tutor", controller.postHome);
 
-// router.get("/tutorlogin",controller.getLogin)
-router.post("/tutorlogin", controller.postLogin);
+router.get("/login",controller.getLogin)
+router.post("/login", controller.postLogin);
 
-// router.get("/tutorsignup",controller.getSignup)
-router.post("/tutorsignup", controller.postSignup);
+// router.get("/signup",controller.getSignup)
+router.post("/signup", controller.postSignup);
 
-// router.get("/tutorclass",controller.getclass)
-router.post("/tutorclass", controller.postclass);
+// router.get("/class",controller.getclass)
+router.post("/class", controller.postclass);
 
 router.get("/attendance", controller.getAttendance);
 // router.post("/",controller.post )

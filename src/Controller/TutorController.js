@@ -4,8 +4,11 @@ const multer = require("multer");
 const storage = require("../../Util/DiskStorage");
 const upload = multer({ storage: storage });
 const register = require("../Model/Register");
+const tutor = require("../Model/Tutor");
 const data = require("../Model/Home_page");
-const { post } = require("../Router/User_router");
+const jwt = require("jsonwebtoken");
+// const { post } = require("../Router/User_router");
+// const { getLogin } = require("./UserControllers");
 
 module.exports = {
   getHome: (req, res) => {
@@ -50,10 +53,19 @@ module.exports = {
   },
   postLogin: async (req, res) => {
     try {
-      const login = await register.insertMany(
-        ({ Username, password } = req.body)
-      );
-      res.send(req.body);
+      const login = await tutor.find({
+        Username: req.body.username,
+        password: req.body.password,
+      });
+      if (login) {
+        const encode = jwt.sign({ id: login[0]._id }, "ruwais");
+        console.log(encode, login[0]._id);
+        res.cookie("tutor", { encode }, { httpOnly: true });
+        res.status(200).json("sucsess");
+      } else {
+        res.status(404).json("tutor not found");
+      }
+      // res.send(req.body);
     } catch (error) {
       console.log(error);
     }
@@ -68,10 +80,10 @@ module.exports = {
   },
   postSignup: async (req, res) => {
     try {
-      const signup = await register.insertMany(
-        ({ Name, Username, Phone, Email, password } = req.body)
-      );
-      res.sent(req.body);
+      const signup = await new tutor(
+        ({ name, username, phone, email, password } = req.body)
+      ).save();
+      res.status(200).json("Sucsess");
     } catch (error) {
       console.log(error);
     }

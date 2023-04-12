@@ -4,7 +4,10 @@ const multer = require("multer");
 const storage = require("../../Util/DiskStorage");
 const upload = multer({ storage: storage });
 const register = require("../Model/Register");
+const user = require("../Model/User");
 const data = require("../Model/Home_page");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 module.exports = {
   getHome: (req, res) => {
@@ -24,7 +27,6 @@ module.exports = {
           Attandance,
           Todays_task,
           Assignment,
-          // My_Assignment: req.body.My_Assignment,
           Announcements_pdf,
           Announcements_images,
           Announcements_videos,
@@ -51,10 +53,27 @@ module.exports = {
   },
   postLogin: async (req, res) => {
     try {
-      const login = await register.insertMany(
-        ({ Username, password } = req.body)
-      );
-      res.send(req.body);
+      const userlogin = await user.findOne({
+        username: req.body.username,
+        password: req.body.password,
+      });
+      if (user.username == req.body.username) {
+        bcrypt.compare(req.body.password, user.password).then((result) => {
+          if (result) {
+            res.send("HOME");
+          } else {
+            res.send("error password");
+          }
+        });
+
+        // if (userlogin) {
+        //   const encode = jwt.sign({ id: userlogin._id }, "tazz");
+        //   console.log(encode, userlogin._id);
+        //   res.cookie("user", { encode }, { httpOnly: true });
+        //   res.status(200).json("sucsess");
+      } else {
+        res.status(404).json("user not found");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -69,10 +88,15 @@ module.exports = {
   },
   postSignup: async (req, res) => {
     try {
-      const signup = await register.insertMany(
-        ({ Name, Username, Phone, Email, password } = req.body)
-      );
-      res.sent(req.body);
+      const hashedpass = await bcrypt.hash(req.body.password, 10);
+      const signup = await new user({
+        name: req.body.name,
+        username: req.body.username,
+        phone: req.body.phone,
+        email: req.body.email,
+        password: hashedpass,
+      }).save();
+      res.status(200).json("Sucsess");
     } catch (error) {
       console.log(error);
     }
